@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        *{
+            margin: 0;
+            padding: 0;
+        }
+        .main{
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background-color: rgba(128, 128, 128, 0.737);
+            height: 100vh;
+            width: 100%;
+            flex-direction: column;
+
+        }
+        .content{
+            margin-bottom: 30px;
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 80%;
+        }
+        .content img{
+            background-color: bisque;
+            border: 3px solid black;
+            border-radius: 100px;
+            width: 200px;
+            height: 200px;
+            margin-top: 30px;
+        }
+        .banner{
+            display: flex;
+            flex-direction: column;
+            background-color: rgba(5, 169, 172, 0.604) ;
+            height: 90vh;
+            width: 90%;
+            display: flex;
+            justify-content: start;
+            align-items: center;
+            border-radius: 50px;
+            border: 3px solid black;
+        }
+        .rock, .paper, .scissor{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            flex-direction: column;
+        }
+        .btnreset button{
+            height: 50px;
+            width: 150px;
+            font-size: 25px;
+            margin-top: 50px;
+            background-color: aquamarine;
+            border: 3px solid black;
+            border-radius: 50px;
+        }
+        .content button{
+            margin-top: 10px;
+            text-align: center;
+            width: 150px;
+            height: 50px;
+            font-size: 20px;
+            padding: 3px;
+            background-color: rgba(255, 255, 255, 0.766);
+            border: 3px solid black;
+            border-radius: 50px;
+        }
+        .race{
+            margin-top: 10px;
+        }
+        .race select{
+            width: 60px;
+            height: 30px;
+            text-align: center;
+            border-radius: 10px;
+            border: 3px solid black;
+            font-weight: bold;
+        }
+        #resultwin{
+            display: none;
+        }
+        #resultlose{
+            display: none;
+        }
+        #resulttie{
+            display: none;
+        }
+        .score{
+            display: flex;
+            justify-content: space-evenly;
+            align-items: center;
+            width: 80%;
+            height: 50px;
+            font-weight: bold;
+            font-size: 30px;
+            margin-top: 20px;
+            border: 3px solid black;
+            border-radius: 50px;
+            background-color: rgba(255, 255, 255, 0.634);
+            
+        }
+    </style>
+</head>
+<body>
+
+<div class="main">
+
+    <div class="banner">
+
+        <div class="content">
+            <div class="rock">
+                <img src="rock.png" alt="" >
+                <button id="rock">Rock</button>
+            </div>
+
+            <div class="paper">
+                <img src="paper.png" alt="">
+                <button id="paper">Paper</button>
+            </div>
+    
+            <div class="scissor">
+                <img src="scissor.png" alt="" >
+                <button id="scissor">Scissor</button>
+            </div>
+        </div>
+
+        <div id="resultwin">
+            <h1>Winner! You win!</h1>
+        </div>
+        <div id="resultlose">
+            <h1>Lose! Computer Wins!</h1>
+        </div>
+        <div id="resulttie">
+            <h1>Tie!</h1>
+        </div>
+
+
+        <div>
+            <h1 id="text"></h1>
+        </div>
+
+        <div class="race">
+            <h2>Race:</h2>
+            <select name="race" id="race">
+                <option value="5">5</option>
+                <option value="8">8</option>
+                <option value="10">10</option>
+                <option value="12">12</option>
+            </select>
+        </div>
+
+        <div class="btnreset">
+            <button id="reset">reset</button>
+        </div>
+
+
+        <div class="score">
+            <p>Player:</p><span id="player_score">0</span>
+            <p>Computer:</p><span id="computer_score">0</span>
+        </div>
+
+    </div>
+
+</div>
+    
+
+    <script>
+
+        const rock = document.querySelector('#rock')
+        const paper = document.querySelector('#paper')
+        const text = document.querySelector('#text')
+        const player_score = document.querySelector('#player_score')
+        const computer_score = document.querySelector('#computer_score')
+        const race = document.querySelector('#race')
+        let x = 0
+        let y = 0
+
+        const random = () =>{
+            const choices = ["Rock", "Paper", "Scissor"]
+            const randomIndex = Math.floor(Math.random()*3)
+            return choices[randomIndex]
+        }
+
+        
+
+
+        //For button rock
+        const btnRock = () =>{
+            let computer = random()
+        if (computer == rock.innerText) {
+            text.innerText = `Tie!!! You picked:  ${rock.innerText}! Computer picked: ${computer}`
+
+        } else if(computer == scissor.innerText){
+            text.innerText = `Winner!!! You picked:  ${rock.innerText}!  Computer picked: ${computer}`
+            x++
+            player_score.innerText = x
+            if(race.value == x){
+                const resultwin = document.querySelector('#resultwin')
+                resultwin.style.display = 'block'
+                disbtn()
+            }
+        }else{
+            text.innerText = `Lose!!! You picked:  ${rock.innerText}!  Computer picked: ${computer}`
+            y++
+            computer_score.innerText = y
+            if(race.value == y){
+                const resultlose = document.querySelector('#resultlose')
+                resultlose.style.display = 'block'
+                disbtn()
+            }
+        }
+    }
+
+        rock.addEventListener('click', btnRock)
+
+
+        //For button Paper
+        const btnPaper = () =>{
+            let computer = random()
+        if (computer == paper.innerText) {
+            text.innerText = `Tie!!! You picked:  ${paper.innerText}!  Computer picked: ${computer} `
+
+
+        } else if(computer == rock.innerText){
+            text.innerText = `Winner!!! You picked:  ${paper.innerText}!  Computer picked: ${computer} `
+            x++
+            player_score.innerText = x
+
+            if(race.value == x){
+                const resultwin = document.querySelector('#resultwin')
+                resultwin.style.display = 'block'
+                disbtn()
+            }   
+        }else{
+            text.innerText = `Lose!!! You picked:  ${paper.innerText}!  Computer picked: ${computer} `
+            y++
+            computer_score.innerText = y
+            if(race.value == y){
+                const resultlose = document.querySelector('#resultlose')
+                resultlose.style.display = 'block'
+                disbtn()
+            }
+        }
+    }
+
+        paper.addEventListener('click', btnPaper)
+
+
+        //For button Scissor
+
+        const scissor = document.querySelector('#scissor')
+        const btnScissor = () =>{
+            let computer = random()
+        if (computer == scissor.innerText) {
+            text.innerText = `Tie!!! You picked:  ${scissor.innerText}!  Computer picked: ${computer} `
+
+        } else if(computer == paper.innerText){
+            text.innerText = `Winner!!! You picked:  ${scissor.innerText}!  Computer picked: ${computer} `
+            x++
+            player_score.innerText = x
+            if(race.value == x){
+                const resultwin = document.querySelector('#resultwin')
+                resultwin.style.display = 'block'
+                disbtn()
+            }
+        }else{
+            text.innerText = `Lose!!! You picked:  ${scissor.innerText}!  Computer picked: ${computer} `
+            y++
+            computer_score.innerText = y
+            if(race.value == y){
+                const resultlose = document.querySelector('#resultlose')
+                resultlose.style.display = 'block'
+                disbtn()
+            }
+        }
+    }   
+        scissor.addEventListener('click', btnScissor)
+
+
+        //For the reset button 
+        const reset = document.querySelector('#reset')
+        
+        const btnreset = () =>{
+            x = 0
+            y = 0
+            player_score.innerText = x
+            computer_score.innerText = y
+            resultlose.style.display = 'none'
+            resultwin.style.display = 'none'
+            text.innerText = ""
+            enabtn()
+        }
+
+        reset.addEventListener('click', btnreset)
+
+
+        const disbtn = () =>{
+            rock.disabled = true
+            paper.disabled = true
+            scissor.disabled = true
+        }
+
+        const enabtn = () =>{
+            rock.disabled = false
+            paper.disabled = false
+            scissor.disabled = false
+        }
+
+
+
+        
+    </script>   
+</body>
+</html>
